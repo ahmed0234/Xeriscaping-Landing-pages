@@ -1,26 +1,239 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* === Color Palette === */
+  --color-sand: #E8D8C3;
+  --color-sand-light: #F2E8D8;
+  --color-desert-tan: #D2B48C;
+  --color-stone-gray: #A8A29E;
+  --color-sage: #7A8F7A;
+  --color-olive: #556B2F;
+  --color-terracotta: #C16A3D;
+  --color-cactus: #2F4F3E;
+  --color-sunset-gold: #D4A373;
+  --color-warm-white: #FAF7F2;
+  --color-night-desert: #1C1A17;
+  --color-night-light: #2A2723;
+  --color-night-lighter: #3D3830;
+
+  /* === Typography === */
+  --font-heading: var(--font-cormorant), "Cormorant Garamond", "Georgia", serif;
+  --font-body: var(--font-inter), "Inter", "Helvetica Neue", sans-serif;
+
+  /* === Spacing === */
+  --spacing-18: 4.5rem;
+  --spacing-22: 5.5rem;
+  --spacing-30: 7.5rem;
+  --spacing-34: 8.5rem;
+
+  /* === Animations === */
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-float-slow: float 8s ease-in-out infinite;
+  --animate-shimmer: shimmer 3s ease-in-out infinite;
+  --animate-dust: dust 12s linear infinite;
+  --animate-fade-up: fade-up 0.8s ease-out forwards;
+  --animate-glow: glow-pulse 2.5s ease-in-out infinite;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* === Root Variables === */
+:root {
+  --background: #FAF7F2;
+  --foreground: #1C1A17;
 }
 
+/* === Base Styles === */
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-body);
+  overflow-x: hidden;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* === Selection Colors === */
+::selection {
+  background-color: #D4A37355;
+  color: #1C1A17;
+}
+
+/* === Scrollbar === */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #FAF7F2;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #D2B48C;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #C16A3D;
+}
+
+/* === Keyframes === */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-12px); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+@keyframes dust {
+  0% {
+    transform: translateX(-10%) translateY(0);
+    opacity: 0;
+  }
+  10% { opacity: 0.3; }
+  90% { opacity: 0.3; }
+  100% {
+    transform: translateX(110%) translateY(-20px);
+    opacity: 0;
+  }
+}
+
+@keyframes fade-up {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes glow-pulse {
+  0%, 100% { box-shadow: 0 0 15px rgba(212, 163, 115, 0.3), 0 0 30px rgba(212, 163, 115, 0.1); }
+  50% { box-shadow: 0 0 25px rgba(212, 163, 115, 0.5), 0 0 50px rgba(212, 163, 115, 0.2); }
+}
+
+/* === Glass Effect === */
+.glass {
+  background: rgba(250, 247, 242, 0.75);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+}
+
+.glass-dark {
+  background: rgba(28, 26, 23, 0.65);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+}
+
+/* === Gradient Text === */
+.text-gradient-gold {
+  background: linear-gradient(135deg, #D4A373 0%, #E8D8C3 50%, #D4A373 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* === Nav Link Hover Underline === */
+.nav-link-underline {
+  position: relative;
+}
+
+.nav-link-underline::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 1.5px;
+  background: linear-gradient(90deg, #D4A373, #C16A3D);
+  transition: width 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.nav-link-underline:hover::after {
+  width: 100%;
+}
+
+/* === Hero Image Overlay === */
+.hero-overlay {
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(28, 26, 23, 0.92) 0%,
+      rgba(28, 26, 23, 0.85) 15%,
+      rgba(28, 26, 23, 0.72) 40%,
+      rgba(28, 26, 23, 0.60) 65%,
+      rgba(28, 26, 23, 0.70) 100%
+    );
+}
+
+/* === Navbar Top Gradient (transparent state) === */
+.navbar-gradient {
+  background: linear-gradient(
+    to bottom,
+    rgba(28, 26, 23, 0.55) 0%,
+    rgba(28, 26, 23, 0.30) 60%,
+    transparent 100%
+  );
+}
+
+/* === Hero Text Shadow === */
+.hero-text-shadow {
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.5), 0 1px 6px rgba(0, 0, 0, 0.3);
+}
+
+.hero-text-shadow-sm {
+  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.4), 0 1px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* === CTA Glow Button === */
+.btn-glow {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-glow::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  border-radius: inherit;
+  background: linear-gradient(135deg, #D4A373, #C16A3D, #D4A373);
+  z-index: -1;
+  animation: glow-pulse 2.5s ease-in-out infinite;
+}
+
+/* === Stats Row Dividers === */
+.stats-divider::before {
+  content: '';
+  position: absolute;
+  top: 20%;
+  left: 0;
+  width: 1px;
+  height: 60%;
+  background: linear-gradient(to bottom, transparent, #D2B48C40, transparent);
+}
+
+/* On mobile 2-col grid, hide left divider for odd items and show top border for row 2 */
+@media (max-width: 767px) {
+  .stats-divider:nth-child(even)::before {
+    display: block;
+  }
+  .stats-divider:nth-child(3)::before,
+  .stats-divider:nth-child(4)::before {
+    top: 0;
+    left: 10%;
+    width: 80%;
+    height: 1px;
+    background: linear-gradient(to right, transparent, #D2B48C40, transparent);
+  }
+  .stats-divider:nth-child(3) {
+    border-top: none;
+  }
 }
